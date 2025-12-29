@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SLAP Bible Challenge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="piano.mp3" type="audio/mp3">
+</audio>
+
+<div class="theme-toggle">
+  <button id="themeBtn">🌙 Night</button>
+</div>
+
+<div class="container" id="captureArea">
+
+  <h1 class="title">SLAP Bible Challenge</h1>
+
+  <p id="date"></p>
+
+  <div class="input-area" id="inputArea">
+    <input type="text" id="nameInput" placeholder="Enter your name" />
+    <button id="speakBtn">Speak & Declare</button>
+  </div>
+
+  <div class="content hidden" id="content">
+    <p class="declaration" id="declaration"></p>
+    <small class="reference" id="reference"></small>
+  </div>
+
+  <div class="actions">
+    <button id="exportBtn">📸 Export Image</button>
+    <button id="qrBtn">🔳 Generate QR</button>
+  </div>
+
+  <canvas id="qrCanvas"></canvas>
+
+  <p class="cta" id="shareBtn">Try this and declare!</p>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+:root {
+  --card-bg: linear-gradient(
+    180deg,
+    #3a2618,
+    #1f140c
+  );
+
+  --gold: #f5d08a;
+  --soft-gold: #fbe8c1;
+  --button-gold: #b8893c;
+  --border-glow: rgba(255, 200, 120, 0.45);
+}
+
+body {
+  margin: 0;
+  font-family: "Georgia", serif;
+  background: url("./images/SLAP-BG.jpg") center/cover no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: var(--card-bg);
+  color: var(--soft-gold);
+  padding: 36px 30px;
+  /* width: 90%; */
+  max-width: 420px;
+  border-radius: 22px;
+
+  border: 2px solid var(--border-glow);
+  box-shadow:
+    0 0 25px rgba(255, 190, 120, 0.25),
+    inset 0 0 18px rgba(255, 200, 120, 0.12);
+}
+
+.title {
+  text-align: center;
+  /* font-size: 40px;
+  letter-spacing: 4px; */
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+#date {
+  text-align: center;
+  opacity: 0.85;
+  font-size: 14px;
+}
+
+.input-area {
+  text-align: center;
+  margin-top: 18px;
+}
+
+input {
+  padding: 14px;
+  width: 93%;
+  border-radius: 14px;
+  border: none;
+  background: rgba(255, 235, 200, 0.15);
+  color: var(--soft-gold);
+  font-size: 16px;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(255, 235, 200, 0.65);
+}
+
+button {
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  width: 100%;
+  margin-top: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+#speakBtn {
+  background: linear-gradient(
+    180deg,
+    #d6a14a,
+    #8f5e20
+  );
+  color: #2a1b12;
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 22px;
+  font-size: 17px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.reference {
+  display: block;
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.hidden {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.actions button {
+  flex: 1;
+  background: rgba(255, 215, 160, 0.12);
+  color: var(--soft-gold);
+  border: 1px solid rgba(255, 215, 160, 0.3);
+}
+
+.cta {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--gold);
+}
+
+canvas {
+  display: block;
+  margin: 16px auto 0;
+}
