@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: "Nunito Sans", serif;
+  font-family: 'Goldman', sans-serif;
   background: url("./images/SLAP-BG.jpg") center / cover no-repeat fixed;
   min-height: 100vh;
   display: flex;
@@ -201,3 +201,4 @@ canvas {
     font-size: 1.3rem;
   }
 }
+
