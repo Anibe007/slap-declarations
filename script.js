@@ -30,7 +30,7 @@ const referenceEl = document.getElementById("reference");
 const music = document.getElementById("bgMusic");
 
 /* DECLARE */
-speakBtn.addEventListener("click", () => {
+speakBtn.addEventListener("click", async () => {
   const input = document.getElementById("nameInput");
   const name = input.value.trim();
 
@@ -57,26 +57,26 @@ speakBtn.addEventListener("click", () => {
     if (music.volume < 0.3) music.volume += 0.02;
     else clearInterval(fade);
   }, 120);
+
+  // Save participant into Firebase
+  try {
+    await db.collection("participants").add({
+      name: name,
+      date: new Date().toISOString()
+    });
+    console.log("Saved to Firebase");
+  } catch (e) {
+    console.error("Firebase error:", e);
+  }
 });
 
-/* DAY / NIGHT TOGGLE */
-const themeBtn = document.getElementById("themeBtn");
-
-themeBtn.onclick = () => {
-  document.body.classList.toggle("light");
-  themeBtn.textContent =
-    document.body.classList.contains("light")
-      ? "☀️ Day"
-      : "🌙 Night";
-};
-
-/* EXPORT IMAGE */
+/* EXPORT IMAGE as JPEG */
 document.getElementById("exportBtn").onclick = () => {
   html2canvas(document.getElementById("captureArea"), { scale: 2 })
     .then(canvas => {
       const link = document.createElement("a");
-      link.download = "slap-declaration.png";
-      link.href = canvas.toDataURL("image/png");
+      link.download = "slap-declaration.jpg";
+      link.href = canvas.toDataURL("image/jpeg", 0.95);
       link.click();
     });
 };
@@ -95,4 +95,40 @@ document.getElementById("qrBtn").onclick = () => {
     encodeURIComponent(window.location.href);
 
   img.onload = () => ctx.drawImage(img, 0, 0);
+};
+
+/* SHARE FEATURE */
+document.getElementById("shareBtn").onclick = async () => {
+  const shareText = `Check out my SLAP declaration!\n\n${declarationEl.textContent}\n\nRef: ${referenceEl.textContent}`;
+  const pageUrl = window.location.href;
+
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText + "\n\n" + pageUrl)}`;
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "SLAP Declaration",
+        text: shareText,
+        url: pageUrl
+      });
+      return;
+    } catch (err) {}
+  }
+
+  const choice = prompt(
+`Choose where to share:
+
+1. WhatsApp
+2. Facebook
+3. Copy Link
+
+Cancel = Close`);
+
+  if (choice === "1") window.open(whatsappUrl, "_blank");
+  if (choice === "2") window.open(facebookUrl, "_blank");
+  if (choice === "3") {
+    navigator.clipboard.writeText(pageUrl);
+    alert("Link copied!");
+  }
 };
