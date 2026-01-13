@@ -3,23 +3,19 @@
   --soft-gold: #fbe8c1;
   --button-gold: #d6a14a;
   --border-glow: rgba(214, 161, 74, 0.55);
-
-  /* NIGHT */
   --card-night: rgba(35, 22, 14, 0.65);
   --text-night: #fbe8c1;
-
-  /* DAY */
-  --card-day: rgba(255, 255, 255, 0.65);
-  --text-day: #5a3a1a;
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   margin: 0;
-  font-family: "Georgia", serif;
+  font-family: "Nunito Sans", serif;
   background: url("./images/SLAP-BG.jpg") center / cover no-repeat fixed;
   min-height: 100vh;
   display: flex;
@@ -27,10 +23,10 @@ body {
   justify-content: center;
   padding: 24px;
   color: var(--text-night);
-  transition: background 0.6s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* ================= CARD ================= */
 .container {
   position: relative;
   width: 100%;
@@ -38,16 +34,13 @@ body {
   padding: 36px 28px;
   border-radius: 22px;
   background: var(--card-night);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
+  /* backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); */
   border: 1.5px solid var(--border-glow);
-  box-shadow:
-    0 0 40px rgba(214, 161, 74, 0.25),
-    inset 0 0 28px rgba(214, 161, 74, 0.18);
-
-  transition: background 0.6s ease, box-shadow 0.6s ease;
+  box-shadow: 0 0 28px rgba(214, 161, 74, 0.25),
+              inset 0 0 20px rgba(214, 161, 74, 0.15);
   animation: fadeUp 0.8s ease;
+  will-change: transform, opacity;
 }
 
 .container::before {
@@ -55,42 +48,21 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    circle at top,
-    rgba(255, 220, 160, 0.12),
-    transparent 70%
-  );
+  background: radial-gradient(circle at top, rgba(255, 220, 160, 0.12), transparent 70%);
   pointer-events: none;
+  z-index: 0;
 }
 
-/* ================= DAY MODE ================= */
-body.light {
-  color: var(--text-day);
-}
-
-body.light .container {
-  background: var(--card-day);
-  box-shadow:
-    0 0 30px rgba(180, 140, 80, 0.25),
-    inset 0 0 20px rgba(255, 255, 255, 0.6);
-  border-color: rgba(180, 140, 80, 0.4);
-}
-
-body.light input {
-  background: rgba(255, 255, 255, 0.9);
-  color: #3a240d;
-}
-
-body.light .content {
-  text-shadow: none;
-}
-
-/* ================= TEXT ================= */
+/* ---- TITLE: Forced single-line ---- */
 .title {
   text-align: center;
-  font-size: 1.9rem;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
   color: var(--gold);
-  text-shadow: 0 0 14px rgba(255, 215, 160, 0.6);
+  text-shadow: 0 0 14px rgba(255, 215, 160, 0.45);
+  margin-bottom: 6px;
+  white-space: nowrap;        /* prevent wrapping */
+  overflow: hidden;           /* avoid overflow */
+  text-overflow: ellipsis;    /* show "..." if too long */
 }
 
 #date {
@@ -100,7 +72,6 @@ body.light .content {
   margin-bottom: 18px;
 }
 
-/* ================= INPUT ================= */
 .input-area {
   text-align: center;
 }
@@ -110,18 +81,23 @@ input {
   padding: 14px;
   border-radius: 14px;
   border: none;
-  outline: none;
   background: rgba(255, 235, 200, 0.15);
   color: var(--soft-gold);
   font-size: 16px;
-  transition: background 0.4s ease, color 0.4s ease;
+  font-weight: 600;
+  outline: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
 input::placeholder {
-  color: rgba(255, 235, 200, 0.6);
+  color: rgba(255, 235, 200, 0.4);
 }
 
-/* ================= BUTTON ================= */
+input:focus {
+  background: rgba(255, 235, 200, 0.22);
+  box-shadow: 0 0 0 2px rgba(214, 161, 74, 0.45);
+}
+
 button {
   width: 100%;
   padding: 14px;
@@ -129,45 +105,39 @@ button {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  font-family: inherit;
   font-size: 16px;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-button:hover {
-  transform: translateY(-1px);
+button:active {
+  transform: scale(0.97);
 }
 
 #speakBtn {
   background: linear-gradient(180deg, #f0c36a, #9b6222);
   color: #2a1b12;
   font-weight: bold;
-  box-shadow:
-    0 0 20px rgba(214, 161, 74, 0.6),
-    inset 0 0 12px rgba(255, 220, 160, 0.4);
+  box-shadow: 0 0 18px rgba(214, 161, 74, 0.45),
+              inset 0 0 10px rgba(255, 220, 160, 0.35);
 }
 
-/* ================= DECLARATION ================= */
+#speakBtn:hover {
+  opacity: 0.92;
+}
+
 .content {
   margin-top: 24px;
-  font-size: 17px;
+  font-size: clamp(15px, 1.6vw, 17px);
   line-height: 1.75;
   text-align: center;
   text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 
-.reference {
-  display: block;
-  margin-top: 14px;
-  font-size: 14px;
-  opacity: 0.85;
-}
-
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-/* ================= ACTIONS ================= */
 .actions {
   display: flex;
   gap: 10px;
@@ -176,11 +146,14 @@ button:hover {
 
 .actions button {
   background: rgba(255, 215, 160, 0.12);
-  color: inherit;
   border: 1px solid rgba(255, 215, 160, 0.3);
+  color: var(--soft-gold);
 }
 
-/* ================= CTA ================= */
+.actions button:hover {
+  background: rgba(255, 215, 160, 0.2);
+}
+
 .cta {
   margin-top: 22px;
   text-align: center;
@@ -190,33 +163,41 @@ button:hover {
   text-decoration: underline;
 }
 
-/* ================= QR ================= */
 canvas {
   display: block;
   margin: 16px auto 0;
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 480px) {
-  .container {
-    padding: 30px 22px;
-  }
-
-  .title {
-    font-size: 1rem;
-  }
-
-  .content {
-    font-size: 16px;
-  }
-
-  #themeBtn {
-    display: none;
-  }
-}
-
-/* ================= ANIMATION ================= */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------- RESPONSIVE BREAKPOINTS --------- */
+
+/* for screens < 480px */
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+  
+  .container {
+    padding: 28px 20px;
+    max-width: 95%;
+  }
+  
+  input, button {
+    font-size: 15px;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+}
+
+/* for tiny screens < 350px */
+@media (max-width: 350px) {
+  .title {
+    font-size: 1.3rem;
+  }
 }
