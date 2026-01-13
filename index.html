@@ -5,22 +5,19 @@
   <title>SLAP Bible Challenge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-<!-- Background Music -->
 <audio id="bgMusic" loop>
   <source src="piano.mp3" type="audio/mp3">
 </audio>
 
-<div class="theme-toggle">
-  <button id="themeBtn">🌙 Night</button>
-</div>
-
 <div class="container" id="captureArea">
-
   <h1 class="title">SLAP Bible Challenge</h1>
-
   <p id="date"></p>
 
   <div class="input-area" id="inputArea">
@@ -41,8 +38,22 @@
   <canvas id="qrCanvas"></canvas>
 
   <p class="cta" id="shareBtn">Try this and declare!</p>
-
 </div>
+
+
+<!-- Firebase Config (PUT YOUR KEYS HERE) -->
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="script.js"></script>
