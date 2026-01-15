@@ -1,3 +1,4 @@
+/* 🔹 DAILY DECLARATIONS */
 const declarations = [
   {
     text: "The blessings of God are on my life and empower me to prosper. The favor of God produces divine opportunities to make it happen. Because the Holy Spirit that is in me guides my steps, I am always at the right place at the right time.",
@@ -13,15 +14,14 @@ const declarations = [
   }
 ];
 
-/* DATE */
-document.getElementById("date").textContent =
-  new Date().toDateString();
+/* 🔹 DATE */
+document.getElementById("date").textContent = new Date().toDateString();
 
-/* DAILY ROTATION */
+/* 🔹 DAILY ROTATION */
 const todayIndex = new Date().getDate() % declarations.length;
 const dailyDeclaration = declarations[todayIndex];
 
-/* ELEMENTS */
+/* 🔹 ELEMENT REFS */
 const speakBtn = document.getElementById("speakBtn");
 const content = document.getElementById("content");
 const inputArea = document.getElementById("inputArea");
@@ -29,7 +29,7 @@ const declarationEl = document.getElementById("declaration");
 const referenceEl = document.getElementById("reference");
 const music = document.getElementById("bgMusic");
 
-/* DECLARE */
+/* 🟣 DECLARE BUTTON */
 speakBtn.addEventListener("click", async () => {
   const input = document.getElementById("nameInput");
   const name = input.value.trim();
@@ -50,54 +50,63 @@ speakBtn.addEventListener("click", async () => {
   inputArea.style.display = "none";
   content.classList.remove("hidden");
 
+  /* Music Fade-in */
   music.volume = 0;
   music.play();
-
   const fade = setInterval(() => {
     if (music.volume < 0.3) music.volume += 0.02;
     else clearInterval(fade);
   }, 120);
 
-  // Save participant into Firebase
+  /* 🔥 Save Participant in Firebase */
   try {
     await db.collection("participants").add({
       name: name,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
     });
-    console.log("Saved to Firebase");
-  } catch (e) {
-    console.error("Firebase error:", e);
+    console.log("Participant saved!");
+  } catch (err) {
+    console.error("Firebase error:", err);
   }
 });
 
-/* EXPORT IMAGE as JPEG */
+/* 📸 EXPORT — FULL PAGE JPEG */
 document.getElementById("exportBtn").onclick = () => {
-  html2canvas(document.getElementById("captureArea"), { scale: 2 })
-    .then(canvas => {
-      const link = document.createElement("a");
-      link.download = "slap-declaration.jpg";
-      link.href = canvas.toDataURL("image/jpeg", 0.95);
-      link.click();
-    });
+  window.scrollTo(0, 0); // ensure top position
+
+  html2canvas(document.body, {
+    scale: 2,
+    backgroundColor: null,
+    useCORS: true,
+    windowWidth: document.documentElement.scrollWidth,
+    windowHeight: document.documentElement.scrollHeight
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "slap-declaration.jpg";
+    link.href = canvas.toDataURL("image/jpeg", 0.95);
+    link.click();
+  });
 };
 
-/* QR CODE */
+/* 🔳 QR GENERATOR (Links to page) */
 document.getElementById("qrBtn").onclick = () => {
   const canvas = document.getElementById("qrCanvas");
   const ctx = canvas.getContext("2d");
   canvas.width = 150;
   canvas.height = 150;
 
+  const url = window.location.href; // participation link
+
   const img = new Image();
   img.crossOrigin = "anonymous";
   img.src =
     "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
-    encodeURIComponent(window.location.href);
+    encodeURIComponent(url);
 
   img.onload = () => ctx.drawImage(img, 0, 0);
 };
 
-/* SHARE FEATURE */
+/* 📤 SHARE SYSTEM */
 document.getElementById("shareBtn").onclick = async () => {
   const shareText = `Check out my SLAP declaration!\n\n${declarationEl.textContent}\n\nRef: ${referenceEl.textContent}`;
   const pageUrl = window.location.href;
@@ -105,6 +114,7 @@ document.getElementById("shareBtn").onclick = async () => {
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText + "\n\n" + pageUrl)}`;
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
 
+  /* Mobile Native Share */
   if (navigator.share) {
     try {
       await navigator.share({
@@ -113,9 +123,12 @@ document.getElementById("shareBtn").onclick = async () => {
         url: pageUrl
       });
       return;
-    } catch (err) {}
+    } catch (err) {
+      console.log("Native share canceled, showing manual options...");
+    }
   }
 
+  /* Manual Fallback */
   const choice = prompt(
 `Choose where to share:
 
